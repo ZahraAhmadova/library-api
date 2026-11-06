@@ -59,18 +59,21 @@ Your instructor will give you a new requirement. Implement it in your refactored
 
 | Measure | Before | After |
 |---|---|---|
-| Tests passing | | |
-| Lines in the largest file | | |
-| Places where the fine rate appears | | |
-| Route handlers containing SQL | | |
-| Places edited for the change request | n/a | |
-| Can the fine rule be tested without HTTP or a database? | | |
+| Tests passing | 53 | 53 |
+| Lines in the largest file | 557 | 285 (`services.py`) |
+| Places where the fine rate appears | 4 | 1 (`rules.py`) |
+| Route handlers containing SQL | 16 | 0 |
+| Places edited for the change request | n/a | n/a (not provided) |
+| Can the fine rule be tested without HTTP or a database? | No separate module | Yes (`rules.py`) |
 
 ## Questions to answer
 
 1. Which module is the most cohesive? Describe its one job in a sentence.
+`rules.py` is the most cohesive because it focuses on calculating fines and rounding monetary values.
 2. Which dependency did you remove, and what can now change independently because of that?
+I removed the direct dependency between Flask route handlers and SQL queries. Now I can change database queries in `database.py` without modifying the route handlers in `app.py`, as long as the expected results stay the same.
 3. What coupling remains, and why did you accept it?
+`services.py` still depends on `database.py` and the structure of the database rows. I accepted because the service layer needs data to perform library operations and keeping database access separate from the routes makes the code easier to maintain.
 
 ## API reference
 
